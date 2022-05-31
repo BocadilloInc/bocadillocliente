@@ -7,8 +7,6 @@ import Ordenes from './components/paginas/Ordenes';
 import Menu from './components/paginas/Menu';
 import NuevoPlatillo from './components/paginas/NuevoPlatillo';
 
-import Registro from './components/Login/Registro';
-
 
 function App() {
   return (
@@ -18,8 +16,7 @@ function App() {
       }}
     >
           <Routes>
-            <Route path="/" element={<Registro /> } />
-            <Route path="/menu" element={<Menu /> } />
+            <Route path="/" element={<Menu /> } />
             <Route path="/nuevo-platillo" element={<NuevoPlatillo /> } />
             <Route path="/ordenes" element={<Ordenes /> } />
           </Routes>

@@ -38,7 +38,6 @@ function handleSnapshot(snapshot){
                 <Link  exact="true" to="/nuevo-platillo" className="ml-3 bg-gray-700 hover:bg-blue-700 , inline-block mb-5 p-2 , text-white hite-400 uppercase font-bold" >
                     Agregar Platillo
                 </Link>
-
                 {platillos.map( platillo => (
                     <Platillo
                         key={platillo.id}
