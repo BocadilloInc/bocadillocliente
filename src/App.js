@@ -17,6 +17,7 @@ function App() {
     >
           <Routes>
             <Route path="/" element={<Menu /> } />
+            <Route path="/menu" element={<Menu /> } />
             <Route path="/nuevo-platillo" element={<NuevoPlatillo /> } />
             <Route path="/ordenes" element={<Ordenes /> } />
           </Routes>

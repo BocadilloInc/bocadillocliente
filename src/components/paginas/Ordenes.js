@@ -31,23 +31,18 @@ const Ordenes = () => {
 
     return ( 
         <>
-            <div className='md:flex min-h-screen '>
-                <SideBar />
-                <h1 className="text-3xl font-light mb-4">Ordenes</h1>
-                <div className="sm:flex sm:flex-wra´-mx-3">
-                    
+            <div className='md:flex min-h-screen'>
+                <SideBar/>
+                <h1 className="text-3xl font-light mb-4">  Ordenes  </h1>
+                <div className="flex flex-wrap md:flex-1">
                     {ordenes.map(orden =>(
                             <Orden 
                                 key={orden.id}
                                 orden={orden}
-                            />
-                        )
-
-                        )}
+                            />))}
                 </div>
             </div>
         </>
-
      );
 }
  
