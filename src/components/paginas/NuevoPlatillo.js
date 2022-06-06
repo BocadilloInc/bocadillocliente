@@ -15,8 +15,7 @@ const NuevoPlatillo = () => {
     const [urlimgaen, guardarUrlimagen]=useState("");
     //context con firebase
     const { firebase } = useContext(FirebaseContext);
-    //Hook para redireccionar
-    //console.log(firebase)
+    
     const navigate = useNavigate();
 
     //validacion del formulario

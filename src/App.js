@@ -5,7 +5,7 @@ import Ordenes from './components/paginas/Ordenes';
 import Menu from './components/paginas/Menu';
 import NuevoPlatillo from './components/paginas/NuevoPlatillo';
 import Login from './components/Login/Login';
-
+import Registro from './components/Login/Registro';
 function App() {
   return (
     <FirebaseContext.Provider
@@ -15,13 +15,12 @@ function App() {
     >
           <Routes>
             <Route path="/" element={<Login /> } />
+            <Route path="/Registro" element={<Registro /> } />
             <Route path="/menu" element={<Menu /> } />
             <Route path="/nuevo-platillo" element={<NuevoPlatillo /> } />
             <Route path="/ordenes" element={<Ordenes /> } />
           </Routes>
-      
     </FirebaseContext.Provider>
   );
 }
-
 export default App;

@@ -4,8 +4,16 @@ import {FirebaseContext} from "../../firebase";
 import Platillo from "../ui/Platillo";
 import SideBar from '../ui/Sidebar';
 
+//Obtener los valores de la sesion
+import { getAuth } from "firebase/auth";
+
+
 const Menu = () => {
 
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const email = user.email;
+    console.log(email);
     const [platillos, guardarlatillos] = useState([]);
 
 
