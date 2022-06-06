@@ -8,7 +8,7 @@ import SideBar from "../ui/Sidebar";
 import './Registro.css';
 import { useNavigate } from "react-router";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-
+import { NavLink } from "react-router-dom";
 
 
 
@@ -17,14 +17,11 @@ const Registro = () => {
   const auth = getAuth();
   const navigate = useNavigate();
   
-  
-  function crearUsuarios(){
-
-    
-  }
-
  
   //state de imganes
+  const [subida, guardarSubiendo]=useState(false);
+  const [progreso, guardarProgreso]=useState(0);
+  const [urlimgaen, guardarUrlimagen]=useState("");
   //context con firebase
   const { firebase } = useContext(FirebaseContext);
   const formik = useFormik({
@@ -40,9 +37,6 @@ const Registro = () => {
     },
     onSubmit: restaurant => {
       try {
-        //platillo.imagen = urlimgaen;
-       // firebase.db.collection('RestaurantesUsuarios').add(restaurant);
-      
         const mail = restaurant.emailR;
         const password = restaurant.password;
         
@@ -50,8 +44,12 @@ const Registro = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
+          //URl de la imgen
+          restaurant.logoR = urlimgaen;
           console.log("registrado");
+          //Creamos una coleccion con los datos de los restaurantes
           firebase.db.collection('RestaurantesUsuarios').add(restaurant);
+          //Al completarse el login se nos redirigue al menu
           navigate('/menu');
         })
         .catch((error) => {
@@ -65,6 +63,29 @@ const Registro = () => {
       }
     }
   })
+//Imagenes
+const handleUploadStart =()=>{
+  guardarProgreso(0);
+  guardarSubiendo(true);
+
+}
+const handleUploadError = error =>{
+    guardarSubiendo(false);
+    console.log(error);
+}
+const handleUploadSucces= async nombre =>{
+    guardarProgreso(100);
+    guardarSubiendo(false);
+
+    //almacenamiento de la URL
+    const url = await firebase.storage.ref("RestaurantesUsuarios").child(nombre).getDownloadURL();
+    console.log(url);
+    guardarUrlimagen(url);
+}
+const handleProgress= progreso =>{
+    guardarProgreso(progreso);
+    console.log(progreso)
+}
   return (
     <div className="main_container">
       <div className="">
@@ -90,7 +111,19 @@ const Registro = () => {
                     </div>
                     <div className="campo file-select" >
                       <label className="campo__label">Logotipo Restaurante</label>
-                      <input placeholder="Nombre Restaurante" type="file" accept="image/png,image/jpeg" name="image" className="file-select" aria-label="Archivo"></input>
+                      <input placeholder="Nombre Restaurante" type="file" accept="image/png,image/jpeg" name="image" className="file-select" aria-label="Archivo" ></input>
+                      <FileUploader
+                            accept="imagen/*"
+                            id="imagen"
+                            name="imagen"
+                            randomizeFilename
+                            storageRef={firebase.storage.ref("RestaurantesUsuarios")}
+                            onUploadStart={handleUploadStart}
+                            onUploadError={handleUploadError}
+                            onUploadSuccess={handleUploadSucces}
+                            onProgress={handleProgress}
+                        />
+                   
                     </div>
                     <div className="campo">
                       <label className="campo__label">Dirección</label>
@@ -170,27 +203,27 @@ const Registro = () => {
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         placeholder="e-mail" className="campo__field"  />
-                    </div>
-                    <div className="campo">
+                   </div>
+
+                   <div  className="campo">
+
                       <label className="campo__label">Contraseña</label>
                       <input
                         id="password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        placeholder="Contraseña" type="password" className="campo__field"  />
+                        placeholder="Contraseña" type="password" className="campo__field"/>
                     </div>
-                    <div className="campo">
-                      <label className="campo__label">Repetir Contraseña</label>
-                      <input placeholder="Repetir Contraseña" type="password" id="r-password" className="campo__field" alt="strongPass" required />
-                    </div>
+                    
                   </div>
                 </div>
+                
                 <div className="alinear-derecha wrap flex">
                   <button type="submit" className="boton">Avanzar</button>
                 </div>
                 <div >
-                  <button type="reset" className="boton-secundario">Salir</button>
+                  <label type="reset" className="boton-secundario"><NavLink className="text-red-300 hover:text-red-600" exact="true" to="/">Iniciar Sesion</NavLink></label>
                 </div>
               </div>
             </fieldset>
