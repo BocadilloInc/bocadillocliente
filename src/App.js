@@ -7,6 +7,10 @@ import NuevoPlatillo from './components/paginas/NuevoPlatillo';
 import Login from './components/Login/Login';
 import Registro from './components/Login/Registro';
 function App() {
+
+  const [usuario, setUsuario] = React.useState(null);
+
+
   return (
     <FirebaseContext.Provider
       value={{
@@ -14,6 +18,7 @@ function App() {
       }}
     >
           <Routes>
+            
             <Route path="/" element={<Login /> } />
             <Route path="/Registro" element={<Registro /> } />
             <Route path="/menu" element={<Menu /> } />

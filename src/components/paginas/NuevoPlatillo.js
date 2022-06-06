@@ -7,8 +7,13 @@ import SideBar from "../ui/Sidebar";
 
 
 import { useNavigate } from "react-router";
-
+import { getAuth } from "firebase/auth";
 const NuevoPlatillo = () => {
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    const email = user.email;
+    const uid = user.uid;
     //state de imganes
     const [subida, guardarSubiendo]=useState(false);
     const [progreso, guardarProgreso]=useState(0);
@@ -26,6 +31,7 @@ const NuevoPlatillo = () => {
             categoria: '',
             imagen:'',
             descripcion: '',
+            id:uid,
         },
         validationSchema: Yup.object({
             nombre: Yup.string()

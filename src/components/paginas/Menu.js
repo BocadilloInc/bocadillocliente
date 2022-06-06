@@ -9,19 +9,19 @@ import { getAuth } from "firebase/auth";
 
 
 const Menu = () => {
-
+   
     const auth = getAuth();
     const user = auth.currentUser;
     const email = user.email;
-    console.log(email);
+    const uid = user.uid;
+
     const [platillos, guardarlatillos] = useState([]);
-
-
     const {firebase} = useContext(FirebaseContext);
+
     useEffect(()=>{
         const obtenerPlatillos =  ()=>{
-            const resultado =  firebase.db.collection('productos').onSnapshot(handleSnapshot)
-           
+        const resultado =  firebase.db.collection('productos').where("id", "==", uid).onSnapshot(handleSnapshot)
+        
         }
         obtenerPlatillos();
     }, []);
@@ -43,7 +43,7 @@ function handleSnapshot(snapshot){
                 <SideBar />
                 <div className='md:w-3/5  xl:w-4/5 p-6'>
                 <h1 className="text-3xl font-light mb-3 ">Menu</h1>
-                <Link  exact="true" to="/nuevo-platillo" className="ml-3 bg-gray-700 hover:bg-blue-700 , inline-block mb-5 p-2 , text-white hite-400 uppercase font-bold" >
+                <Link  exact="true" to="/nuevo-platillo" className="ml-3 bg-red-800 hover:bg-orange-500 , inline-block mb-5 p-2 , text-white hite-400 uppercase font-bold" >
                     Agregar Platillo
                 </Link>
                 {platillos.map( platillo => (

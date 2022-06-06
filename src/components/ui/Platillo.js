@@ -5,20 +5,19 @@ const Platillo = ({platillo}) => {
     const existenciaRef = useRef(platillo.existencia);
 
     //Para evitar estar entrando al objeto
-    const {id,nombre, imagen, existencia, precio, categoria, descripcion}=platillo;
+    const {id,nombre, imagen, existencia, precio, categoria, descripcion} = platillo;
     //cambios en la bse de datos usando contex
     const { firebase } = useContext(FirebaseContext)
     //Modificacion del estado del platillo
     const actualisarDisponibilidad =() =>{
         //con la siguiente linea de codigo nos aseguramos que la existencia sea un boleano ya que en la base de datos solo acepta valores boelanos
-        const existencia = (existenciaRef.current.value ==="true");
+        const existencia = (existenciaRef.current.value === "true");
        try {
            firebase.db.collection('productos')
            .doc(id)
            .update({
                existencia
-           })
-           ;
+           });
        } catch (error) {
            console.log(error);
        }
